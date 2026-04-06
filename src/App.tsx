@@ -103,7 +103,6 @@ function App() {
     return e;
   };
 
-  // ✅ UPDATED: handleSubmit now sends data to Netlify Forms
   const handleSubmit = async () => {
     const e = validate();
     if (Object.keys(e).length) { setErrors(e); return; }
@@ -114,6 +113,7 @@ function App() {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: new URLSearchParams({
           "form-name": "loan-inquiry",
+          "bot-field": "",
           name: form.name,
           contact: form.contact,
           email: form.email,
@@ -538,14 +538,6 @@ function App() {
       `}</style>
 
       <div style={styles.root}>
-
-        {/* ✅ ADDED: Hidden form for Netlify bot detection — required for React apps */}
-        <form name="loan-inquiry" data-netlify="true" hidden>
-          <input type="text" name="name" />
-          <input type="text" name="contact" />
-          <input type="email" name="email" />
-          <input type="text" name="loanType" />
-        </form>
 
         <nav style={styles.nav}>
           <div style={styles.navLogo}>

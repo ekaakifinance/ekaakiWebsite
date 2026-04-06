@@ -10,6 +10,16 @@
     <meta name="twitter:image" content="https://bolt.new/static/og_default.png" />
   </head>
   <body>
+
+    <!-- Netlify Forms bot detection — required for React/Vite apps -->
+    <form name="loan-inquiry" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="text" name="contact" />
+      <input type="email" name="email" />
+      <input type="text" name="loanType" />
+      <input type="text" name="bot-field" />
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
