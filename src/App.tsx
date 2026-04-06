@@ -7,7 +7,7 @@ const loanTypes = [
   "Car Loan",
   "Education Loan",
   "Gold Loan",
-  "Loan Against Property",
+  "Loan Against Property",      
   "Two-Wheeler Loan",
 ];
 
