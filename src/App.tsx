@@ -9,6 +9,10 @@ const loanTypes = [
   "Gold Loan",
   "Loan Against Property",      
   "Two-Wheeler Loan",
+  "Cash Credit Limit",
+  "Over Draft Limit",
+  "Small and Medium Enterprises",
+  "Builder Finance",
 ];
 
 const services = [
@@ -164,8 +168,9 @@ function App() {
     },
     navBrand: {
       fontFamily: "'Cinzel', 'Playfair Display', serif",
-      fontSize: 15, letterSpacing: "0.2em", color: "#f5e6d3",
+      fontSize: 18, letterSpacing: "0.2em", color: "#ffffff",
       textTransform: "uppercase" as const,
+      fontWeight: 700,
     },
     navBrandSub: {
       fontSize: 10, color: "#cc4400", letterSpacing: "0.3em",
