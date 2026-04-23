@@ -1,57 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 
 const loanTypes = [
-  "Home Loan",
-  "Personal Loan",
-  "Business Loan",
-  "Car Loan",
-  "Education Loan",
-  "Gold Loan",
-  "Loan Against Property",      
-  "Two-Wheeler Loan",
-  "Cash Credit Limit",
-  "Over Draft Limit",
-  "Small and Medium Enterprises",
-  "Builder Finance",
+  "Home Loan","Personal Loan","Business Loan","Car Loan",
+  "Education Loan","Gold Loan","Loan Against Property",
+  "Two-Wheeler Loan","Cash Credit Limit","Over Draft Limit",
+  "Small and Medium Enterprises","Builder Finance",
 ];
 
 const services = [
-  {
-    icon: "🏠",
-    title: "Home Loan",
-    desc: "Fulfill your dream of owning a home with our competitive interest rates and flexible repayment options.",
-    rate: "8.5% p.a.",
-  },
-  {
-    icon: "💼",
-    title: "Business Loan",
-    desc: "Scale your business with fast disbursals, minimal documentation, and tailored financial solutions.",
-    rate: "11% p.a.",
-  },
-  {
-    icon: "🚗",
-    title: "Car Loan",
-    desc: "Drive your dream car today. Quick approvals with up to 100% on-road funding available.",
-    rate: "9.2% p.a.",
-  },
-  {
-    icon: "🎓",
-    title: "Education Loan",
-    desc: "Invest in your future. We fund top institutions across India and abroad with moratorium flexibility.",
-    rate: "10% p.a.",
-  },
-  {
-    icon: "👤",
-    title: "Personal Loan",
-    desc: "Instant funds for any personal need. No collateral required, doorstep service available.",
-    rate: "12% p.a.",
-  },
-  {
-    icon: "🏗️",
-    title: "Loan Against Property",
-    desc: "Unlock the value of your property. Highest amounts at lowest rates with long tenure options.",
-    rate: "10.5% p.a.",
-  },
+  { icon: "🏠", title: "Home Loan", desc: "Fulfill your dream of owning a home with competitive interest rates and flexible repayment options.", rate: "8.5% p.a." },
+  { icon: "💼", title: "Business Loan", desc: "Scale your business with fast disbursals, minimal documentation, and tailored financial solutions.", rate: "11% p.a." },
+  { icon: "🚗", title: "Car Loan", desc: "Drive your dream car today. Quick approvals with up to 100% on-road funding available.", rate: "9.2% p.a." },
+  { icon: "🎓", title: "Education Loan", desc: "Invest in your future. We fund top institutions across India and abroad with moratorium flexibility.", rate: "10% p.a." },
+  { icon: "👤", title: "Personal Loan", desc: "Instant funds for any personal need. No collateral required, doorstep service available.", rate: "12% p.a." },
+  { icon: "🏗️", title: "Loan Against Property", desc: "Unlock the value of your property. Highest amounts at lowest rates with long tenure options.", rate: "10.5% p.a." },
 ];
 
 const stats = [
@@ -62,33 +24,19 @@ const stats = [
 ];
 
 const testimonials = [
-  {
-    name: "Ramesh Gupta",
-    role: "Business Owner, Bhopal",
-    text: "Ekaaki Finance made my business loan process incredibly smooth. Got funds within 3 days!",
-    avatar: "R",
-  },
-  {
-    name: "Priya Sharma",
-    role: "Software Engineer, Indore",
-    text: "Home loan at best rates. The team guided me through every step. Highly recommend!",
-    avatar: "P",
-  },
-  {
-    name: "Arjun Mehta",
-    role: "Doctor, Bhopal",
-    text: "Professional, transparent, and genuinely helpful. Best financial partner in Madhya Pradesh.",
-    avatar: "A",
-  },
+  { name: "Ramesh Gupta", role: "Business Owner, Bhopal", text: "Ekaaki Finance made my business loan process incredibly smooth. Got funds within 3 days!", avatar: "R" },
+  { name: "Priya Sharma", role: "Software Engineer, Indore", text: "Home loan at best rates. The team guided me through every step. Highly recommend!", avatar: "P" },
+  { name: "Arjun Mehta", role: "Doctor, Bhopal", text: "Professional, transparent, and genuinely helpful. Best financial partner in Madhya Pradesh.", avatar: "A" },
 ];
 
-function App() {
+export default function App() {
   const [form, setForm] = useState({ name: "", contact: "", email: "", loanType: "" });
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const formRef = useRef<HTMLDivElement>(null);
+  const [mobileMenu, setMobileMenu] = useState(false);
+  const formRef = useRef(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -97,7 +45,7 @@ function App() {
   }, []);
 
   const validate = () => {
-    const e: Record<string, string> = {};
+    const e = {};
     if (!form.name.trim()) e.name = "Name is required";
     if (!form.contact.trim()) e.contact = "Contact number is required";
     else if (!/^[6-9]\d{9}$/.test(form.contact)) e.contact = "Enter a valid 10-digit mobile number";
@@ -125,695 +73,703 @@ function App() {
         }).toString(),
       });
       setSubmitted(true);
-    } catch (err) {
+    } catch {
       alert("Something went wrong. Please try again.");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-  };
-
-  const styles = {
-    root: {
-      fontFamily: "'Playfair Display', 'Georgia', serif",
-      background: "#0a0000",
-      color: "#f5e6d3",
-      minHeight: "100vh",
-      overflowX: "hidden" as const,
-    },
-
-    nav: {
-      position: "fixed" as const, top: 0, left: 0, right: 0, zIndex: 100,
-      background: scrolled ? "rgba(10,0,0,0.97)" : "transparent",
-      borderBottom: scrolled ? "1px solid rgba(180,30,30,0.3)" : "none",
-      transition: "all 0.4s ease",
-      padding: "0 5%",
-      display: "flex", alignItems: "center", justifyContent: "space-between",
-      height: 72,
-      backdropFilter: scrolled ? "blur(16px)" : "none",
-    },
-    navLogo: {
-      display: "flex", alignItems: "center", gap: 12,
-    },
-    navLogoCircle: {
-      width: 44, height: 44, borderRadius: "50%",
-      background: "linear-gradient(135deg, #b81c1c, #7a0000)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: 20,
-      color: "#fff", border: "2px solid rgba(255,120,0,0.4)",
-      boxShadow: "0 0 20px rgba(180,30,30,0.5)",
-    },
-    navBrand: {
-      fontFamily: "'Cinzel', 'Playfair Display', serif",
-      fontSize: 18, letterSpacing: "0.2em", color: "#ffffff",
-      textTransform: "uppercase" as const,
-      fontWeight: 700,
-    },
-    navBrandSub: {
-      fontSize: 10, color: "#cc4400", letterSpacing: "0.3em",
-    },
-    navLinks: {
-      display: "flex", gap: 36, listStyle: "none", margin: 0, padding: 0,
-    },
-    navLink: {
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 14,
-      letterSpacing: "0.12em", color: "#c9a87c", cursor: "pointer",
-      textTransform: "uppercase" as const, textDecoration: "none",
-      transition: "color 0.3s",
-    },
-    navCta: {
-      background: "linear-gradient(135deg, #b81c1c, #7a0000)",
-      color: "#fff", border: "none", padding: "10px 24px",
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 13,
-      letterSpacing: "0.15em", textTransform: "uppercase" as const,
-      cursor: "pointer", borderRadius: 2,
-      boxShadow: "0 4px 20px rgba(180,30,30,0.4)",
-      transition: "all 0.3s",
-    },
-
-    hero: {
-      minHeight: "100vh",
-      background: `
-        radial-gradient(ellipse at 20% 50%, rgba(180,30,30,0.25) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(120,0,0,0.2) 0%, transparent 50%),
-        linear-gradient(180deg, #0a0000 0%, #150000 50%, #0a0000 100%)
-      `,
-      display: "flex", alignItems: "center",
-      padding: "120px 5% 60px",
-      position: "relative" as const, overflow: "hidden",
-    },
-    heroGlow: {
-      position: "absolute" as const, top: "20%", left: "50%", transform: "translateX(-50%)",
-      width: 600, height: 600, borderRadius: "50%",
-      background: "radial-gradient(circle, rgba(180,30,30,0.08) 0%, transparent 70%)",
-      pointerEvents: "none" as const,
-    },
-    heroDiya: {
-      position: "absolute" as const, bottom: 0, right: "5%",
-      fontSize: 180, opacity: 0.06, transform: "rotate(-15deg)",
-      filter: "sepia(1) saturate(2)",
-    },
-    heroContent: { maxWidth: 680, position: "relative" as const, zIndex: 2 },
-    heroTag: {
-      display: "inline-flex", alignItems: "center", gap: 8,
-      background: "rgba(180,30,30,0.15)", border: "1px solid rgba(180,30,30,0.35)",
-      padding: "6px 18px", borderRadius: 100, marginBottom: 28,
-      fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase" as const,
-      color: "#ff6633", fontFamily: "'Cormorant Garamond', serif",
-    },
-    heroH1: {
-      fontFamily: "'Playfair Display', serif",
-      fontSize: "clamp(42px, 5vw, 72px)",
-      lineHeight: 1.1, fontWeight: 700, marginBottom: 8,
-      color: "#f5e6d3",
-    },
-    heroH1Accent: {
-      background: "linear-gradient(90deg, #ff6633, #b81c1c, #ff9900)",
-      WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-      backgroundClip: "text",
-    },
-    heroSub: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: "clamp(16px, 2vw, 20px)", lineHeight: 1.7,
-      color: "#c9a87c", marginBottom: 40, maxWidth: 520,
-    },
-    heroBtns: { display: "flex", gap: 16, flexWrap: "wrap" as const },
-    btnPrimary: {
-      background: "linear-gradient(135deg, #b81c1c 0%, #7a0000 100%)",
-      color: "#fff", border: "none", padding: "16px 36px",
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 15,
-      letterSpacing: "0.15em", textTransform: "uppercase" as const,
-      cursor: "pointer", borderRadius: 2,
-      boxShadow: "0 8px 32px rgba(180,30,30,0.45)",
-      transition: "all 0.3s",
-    },
-    btnSecondary: {
-      background: "transparent", color: "#c9a87c",
-      border: "1px solid rgba(180,180,120,0.35)",
-      padding: "16px 36px",
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 15,
-      letterSpacing: "0.15em", textTransform: "uppercase" as const,
-      cursor: "pointer", borderRadius: 2, transition: "all 0.3s",
-    },
-
-    statsBar: {
-      background: "linear-gradient(90deg, #7a0000, #b81c1c, #7a0000)",
-      padding: "28px 5%",
-      display: "grid", gridTemplateColumns: "repeat(4, 1fr)",
-      gap: 0, textAlign: "center" as const,
-    },
-    statItem: { padding: "8px 0", borderRight: "1px solid rgba(255,255,255,0.15)" },
-    statValue: {
-      fontFamily: "'Playfair Display', serif",
-      fontSize: "clamp(22px, 3vw, 36px)", fontWeight: 700,
-      color: "#fff", display: "block",
-    },
-    statLabel: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 12, letterSpacing: "0.2em", color: "rgba(255,230,200,0.7)",
-      textTransform: "uppercase" as const, display: "block", marginTop: 4,
-    },
-
-    section: { padding: "80px 5%" },
-    sectionDark: { padding: "80px 5%", background: "#0d0000" },
-    sectionTag: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 12, letterSpacing: "0.3em", color: "#cc4400",
-      textTransform: "uppercase" as const, display: "block", marginBottom: 12,
-    },
-    sectionH2: {
-      fontFamily: "'Playfair Display', serif",
-      fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 700,
-      color: "#f5e6d3", marginBottom: 16, lineHeight: 1.2,
-    },
-    sectionDesc: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 17, color: "#c9a87c", lineHeight: 1.7, maxWidth: 560,
-    },
-    divider: {
-      width: 60, height: 3, marginBottom: 20,
-      background: "linear-gradient(90deg, #b81c1c, #ff6633)",
-      borderRadius: 2,
-    },
-
-    grid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-      gap: 24, marginTop: 48,
-    },
-    card: {
-      background: "linear-gradient(135deg, rgba(30,5,5,0.9), rgba(15,0,0,0.95))",
-      border: "1px solid rgba(180,30,30,0.2)",
-      borderRadius: 4, padding: 32,
-      transition: "all 0.4s ease",
-      cursor: "default" as const, position: "relative" as const, overflow: "hidden",
-    },
-    cardIcon: { fontSize: 36, marginBottom: 16, display: "block" },
-    cardTitle: {
-      fontFamily: "'Playfair Display', serif",
-      fontSize: 20, fontWeight: 700, color: "#f5e6d3", marginBottom: 10,
-    },
-    cardDesc: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 15, color: "#a08070", lineHeight: 1.65, marginBottom: 16,
-    },
-    cardRate: {
-      display: "inline-block",
-      background: "rgba(180,30,30,0.2)", border: "1px solid rgba(180,30,30,0.4)",
-      padding: "4px 12px", borderRadius: 100,
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 13,
-      color: "#ff6633", letterSpacing: "0.05em",
-    },
-    cardGlow: {
-      position: "absolute" as const, top: -40, right: -40,
-      width: 120, height: 120, borderRadius: "50%",
-      background: "radial-gradient(circle, rgba(180,30,30,0.08) 0%, transparent 70%)",
-    },
-
-    formWrap: {
-      maxWidth: 620, margin: "48px auto 0",
-      background: "linear-gradient(135deg, rgba(20,3,3,0.95), rgba(12,0,0,0.98))",
-      border: "1px solid rgba(180,30,30,0.3)",
-      borderRadius: 6, padding: "48px 40px",
-      boxShadow: "0 32px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,100,50,0.1)",
-      position: "relative" as const, overflow: "hidden",
-    },
-    formGlow: {
-      position: "absolute" as const, top: -80, left: "50%", transform: "translateX(-50%)",
-      width: 400, height: 200, borderRadius: "50%",
-      background: "radial-gradient(ellipse, rgba(180,30,30,0.12) 0%, transparent 70%)",
-      pointerEvents: "none" as const,
-    },
-    formTitle: {
-      fontFamily: "'Playfair Display', serif",
-      fontSize: 28, fontWeight: 700, color: "#f5e6d3",
-      textAlign: "center" as const, marginBottom: 6,
-    },
-    formSub: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 15, color: "#a08070", textAlign: "center" as const, marginBottom: 36,
-    },
-    formGroup: { marginBottom: 22 },
-    label: {
-      display: "block",
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase" as const,
-      color: "#c9a87c", marginBottom: 8,
-    },
-    input: {
-      width: "100%", boxSizing: "border-box" as const,
-      background: "rgba(255,255,255,0.03)",
-      border: "1px solid rgba(180,30,30,0.25)",
-      borderRadius: 3, padding: "14px 16px",
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 16,
-      color: "#f5e6d3", outline: "none",
-      transition: "border-color 0.3s, box-shadow 0.3s",
-    },
-    select: {
-      width: "100%", boxSizing: "border-box" as const,
-      background: "rgba(10,0,0,0.9)",
-      border: "1px solid rgba(180,30,30,0.25)",
-      borderRadius: 3, padding: "14px 16px",
-      fontFamily: "'Cormorant Garamond', serif", fontSize: 16,
-      color: "#f5e6d3", outline: "none",
-      cursor: "pointer", appearance: "none" as const,
-      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23cc4400' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E")`,
-      backgroundRepeat: "no-repeat", backgroundPosition: "right 16px center",
-    },
-    errorText: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 13, color: "#ff4444", marginTop: 4,
-    },
-    submitBtn: {
-      width: "100%", marginTop: 8,
-      background: "linear-gradient(135deg, #b81c1c 0%, #7a0000 50%, #b81c1c 100%)",
-      backgroundSize: "200% 100%",
-      color: "#fff", border: "none", padding: "18px",
-      fontFamily: "'Playfair Display', serif", fontSize: 16,
-      letterSpacing: "0.2em", textTransform: "uppercase" as const,
-      cursor: "pointer", borderRadius: 3,
-      boxShadow: "0 8px 32px rgba(180,30,30,0.5)",
-      transition: "all 0.3s",
-    },
-    successBox: {
-      textAlign: "center" as const, padding: "40px 20px",
-    },
-    successIcon: { fontSize: 64, marginBottom: 20, display: "block" },
-    successTitle: {
-      fontFamily: "'Playfair Display', serif",
-      fontSize: 28, color: "#f5e6d3", marginBottom: 10,
-    },
-    successMsg: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 16, color: "#c9a87c", lineHeight: 1.7,
-    },
-
-    testimonialsGrid: {
-      display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-      gap: 24, marginTop: 48,
-    },
-    tCard: {
-      background: "rgba(20,3,3,0.8)",
-      border: "1px solid rgba(180,30,30,0.15)",
-      borderRadius: 4, padding: 28,
-    },
-    tQuote: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 16, color: "#c9a87c", lineHeight: 1.7,
-      marginBottom: 20, fontStyle: "italic" as const,
-    },
-    tAuthor: { display: "flex", alignItems: "center", gap: 12 },
-    tAvatar: {
-      width: 44, height: 44, borderRadius: "50%",
-      background: "linear-gradient(135deg, #b81c1c, #7a0000)",
-      display: "flex", alignItems: "center", justifyContent: "center",
-      fontFamily: "'Playfair Display', serif", fontWeight: 700,
-      fontSize: 18, color: "#fff",
-      border: "2px solid rgba(255,100,50,0.3)",
-    },
-    tName: {
-      fontFamily: "'Playfair Display', serif",
-      fontSize: 15, fontWeight: 700, color: "#f5e6d3",
-    },
-    tRole: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 13, color: "#804030",
-    },
-
-    footer: {
-      background: "#050000",
-      borderTop: "1px solid rgba(180,30,30,0.2)",
-      padding: "40px 5% 24px",
-    },
-    footerGrid: {
-      display: "grid", gridTemplateColumns: "2fr 1fr 1fr",
-      gap: 48, marginBottom: 36,
-    },
-    footerBrand: {
-      fontFamily: "'Playfair Display', serif", fontSize: 20,
-      fontWeight: 700, color: "#f5e6d3", marginBottom: 12,
-    },
-    footerDesc: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 14, color: "#804030", lineHeight: 1.7,
-    },
-    footerH: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase" as const,
-      color: "#cc4400", marginBottom: 16,
-    },
-    footerLink: {
-      display: "block",
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 14, color: "#7a5040", marginBottom: 8, cursor: "pointer",
-      textDecoration: "none", transition: "color 0.2s",
-    },
-    footerBottom: {
-      borderTop: "1px solid rgba(80,10,10,0.4)", paddingTop: 20,
-      display: "flex", justifyContent: "space-between", alignItems: "center",
-    },
-    footerCopy: {
-      fontFamily: "'Cormorant Garamond', serif",
-      fontSize: 12, color: "#4a2020", letterSpacing: "0.05em",
-    },
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setMobileMenu(false);
   };
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Cinzel:wght@400;700&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { background: #0a0000; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #0a0000; }
-        ::-webkit-scrollbar-thumb { background: #7a0000; border-radius: 2px; }
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { background: #0c0101; color: #f0e6d8; -webkit-font-smoothing: antialiased; }
+
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: #0c0101; }
+        ::-webkit-scrollbar-thumb { background: #8b1a1a; border-radius: 2px; }
+
+        /* ── Typography System ── */
+        .display { font-family: 'DM Serif Display', Georgia, serif; }
+        .body-text, body { font-family: 'DM Sans', system-ui, sans-serif; }
+        .serif { font-family: 'Libre Baskerville', Georgia, serif; }
+
+        /* ── Navigation ── */
+        .nav {
+          position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+          height: 68px; padding: 0 6%;
+          display: flex; align-items: center; justify-content: space-between;
+          transition: background 0.4s, border-color 0.4s;
+          border-bottom: 1px solid transparent;
         }
-        @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(180,30,30,0.3); }
-          50% { box-shadow: 0 0 40px rgba(180,30,30,0.6); }
+        .nav.scrolled {
+          background: rgba(12,1,1,0.96);
+          border-bottom-color: rgba(139,26,26,0.25);
+          backdrop-filter: blur(20px);
         }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(30px); }
-          to { opacity: 1; transform: translateY(0); }
+        .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; cursor: pointer; }
+        .nav-emblem {
+          width: 40px; height: 40px; border-radius: 50%;
+          background: linear-gradient(145deg, #c0392b, #7a0000);
+          display: grid; place-items: center;
+          font-family: 'DM Serif Display', serif; font-size: 18px; color: #fff;
+          border: 1.5px solid rgba(255,100,50,0.3);
+          box-shadow: 0 0 0 0 rgba(192,57,43,0.4);
+          animation: emblem-pulse 3s ease-in-out infinite;
         }
-        @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
+        @keyframes emblem-pulse {
+          0%,100% { box-shadow: 0 0 0 0 rgba(192,57,43,0.4); }
+          50% { box-shadow: 0 0 0 8px rgba(192,57,43,0); }
         }
-        .hero-content > * { animation: fadeInUp 0.8s ease forwards; opacity: 0; }
-        .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
-        .hero-content > *:nth-child(2) { animation-delay: 0.25s; }
-        .hero-content > *:nth-child(3) { animation-delay: 0.4s; }
-        .hero-content > *:nth-child(4) { animation-delay: 0.55s; }
-        .logo-circle { animation: pulse-glow 3s ease-in-out infinite; }
-        .card:hover {
-          border-color: rgba(180,30,30,0.5) !important;
-          transform: translateY(-4px);
-          box-shadow: 0 20px 60px rgba(180,30,30,0.15);
+        .nav-brand-name {
+          font-family: 'DM Serif Display', serif;
+          font-size: 17px; color: #f0e6d8; letter-spacing: 0.04em;
+          line-height: 1.2;
         }
-        .btn-primary:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 12px 40px rgba(180,30,30,0.6) !important;
+        .nav-brand-sub {
+          font-family: 'DM Sans', sans-serif;
+          font-size: 10px; color: #c0392b; letter-spacing: 0.2em;
+          text-transform: uppercase; font-weight: 500;
         }
-        .btn-secondary:hover {
-          background: rgba(180,30,30,0.1) !important;
-          border-color: rgba(180,30,30,0.5) !important;
-          color: #f5e6d3 !important;
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-link {
+          font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+          letter-spacing: 0.08em; color: #b89070; cursor: pointer;
+          text-transform: uppercase; text-decoration: none;
+          transition: color 0.25s; border: none; background: none; padding: 0;
         }
-        .nav-link:hover { color: #ff6633 !important; }
-        input:focus { border-color: rgba(180,30,30,0.6) !important; box-shadow: 0 0 0 3px rgba(180,30,30,0.1) !important; }
-        select:focus { border-color: rgba(180,30,30,0.6) !important; box-shadow: 0 0 0 3px rgba(180,30,30,0.1) !important; }
-        .submit-btn:hover { background-position: right center !important; box-shadow: 0 12px 40px rgba(180,30,30,0.7) !important; transform: translateY(-1px); }
-        .footer-link:hover { color: #c9a87c !important; }
-        @media (max-width: 768px) {
-          .footer-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
-          .stats-bar { grid-template-columns: repeat(2,1fr) !important; }
-          .nav-links { display: none !important; }
-          .hero-section { padding: 100px 5% 60px !important; }
-          .form-wrap { padding: 32px 24px !important; }
+        .nav-link:hover { color: #ff6b35; }
+        .nav-cta {
+          background: linear-gradient(135deg, #c0392b, #8b0000);
+          color: #fff; border: none; padding: 10px 22px;
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          cursor: pointer; border-radius: 3px;
+          box-shadow: 0 4px 20px rgba(192,57,43,0.35);
+          transition: all 0.25s;
+        }
+        .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(192,57,43,0.5); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; border: none; background: none; padding: 4px; }
+        .hamburger span { display: block; width: 22px; height: 2px; background: #b89070; border-radius: 2px; transition: all 0.3s; }
+        .mobile-menu {
+          display: none; position: fixed; top: 68px; left: 0; right: 0;
+          background: rgba(12,1,1,0.98); backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(139,26,26,0.2);
+          padding: 20px 6%; flex-direction: column; gap: 16px; z-index: 199;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-link {
+          font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+          letter-spacing: 0.08em; text-transform: uppercase; color: #b89070;
+          cursor: pointer; background: none; border: none; text-align: left;
+          padding: 8px 0; border-bottom: 1px solid rgba(139,26,26,0.1);
+          transition: color 0.2s;
+        }
+
+        /* ── Hero ── */
+        .hero {
+          min-height: 100vh; padding: 120px 6% 80px;
+          display: flex; align-items: center;
+          position: relative; overflow: hidden;
+          background: radial-gradient(ellipse 80% 60% at 15% 60%, rgba(192,57,43,0.18) 0%, transparent 60%),
+                      radial-gradient(ellipse 60% 40% at 85% 15%, rgba(122,0,0,0.15) 0%, transparent 55%),
+                      linear-gradient(160deg, #0c0101 0%, #110202 55%, #0c0101 100%);
+        }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; width: 100%; max-width: 1200px; margin: 0 auto; }
+        .hero-badge {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: rgba(192,57,43,0.12); border: 1px solid rgba(192,57,43,0.3);
+          padding: 6px 16px; border-radius: 100px; margin-bottom: 24px;
+          font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+          letter-spacing: 0.18em; text-transform: uppercase; color: #ff6b35;
+        }
+        .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #ff6b35; animation: blink 2s ease-in-out infinite; }
+        @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .hero-h1 {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(38px, 4.5vw, 64px); line-height: 1.08;
+          color: #f0e6d8; margin-bottom: 20px; letter-spacing: -0.01em;
+        }
+        .hero-h1-accent {
+          background: linear-gradient(100deg, #ff6b35 0%, #c0392b 40%, #ff9933 100%);
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+          display: block;
+        }
+        .hero-sub {
+          font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 300;
+          line-height: 1.75; color: #a08060; margin-bottom: 36px; max-width: 480px;
+        }
+        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+        .btn-primary {
+          background: linear-gradient(135deg, #c0392b, #8b0000);
+          color: #fff; border: none; padding: 15px 32px;
+          font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          cursor: pointer; border-radius: 3px;
+          box-shadow: 0 6px 28px rgba(192,57,43,0.4);
+          transition: all 0.25s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(192,57,43,0.55); }
+        .btn-outline {
+          background: transparent; color: #b89070;
+          border: 1px solid rgba(180,160,120,0.3);
+          padding: 15px 32px;
+          font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          cursor: pointer; border-radius: 3px; transition: all 0.25s;
+        }
+        .btn-outline:hover { background: rgba(192,57,43,0.08); border-color: rgba(192,57,43,0.4); color: #f0e6d8; }
+
+        /* Hero Right — Floating Card Stack */
+        .hero-right { position: relative; display: flex; flex-direction: column; gap: 16px; }
+        .stat-card {
+          background: linear-gradient(135deg, rgba(28,5,5,0.95), rgba(18,2,2,0.98));
+          border: 1px solid rgba(139,26,26,0.2); border-radius: 8px;
+          padding: 20px 24px; display: flex; align-items: center; gap: 16px;
+          backdrop-filter: blur(10px);
+          transition: border-color 0.3s, transform 0.3s;
+        }
+        .stat-card:hover { border-color: rgba(192,57,43,0.4); transform: translateX(4px); }
+        .stat-card-icon { font-size: 28px; flex-shrink: 0; }
+        .stat-card-val {
+          font-family: 'DM Serif Display', serif; font-size: 26px; color: #f0e6d8;
+          line-height: 1; letter-spacing: -0.01em;
+        }
+        .stat-card-label {
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+          color: #7a5040; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 3px;
+        }
+        .hero-accent-line {
+          position: absolute; left: -30px; top: 50%; transform: translateY(-50%);
+          width: 3px; height: 60%; background: linear-gradient(180deg, transparent, #c0392b, transparent);
+          border-radius: 2px;
+        }
+
+        /* ── Stats Bar ── */
+        .stats-bar {
+          background: linear-gradient(90deg, #8b0000, #c0392b 50%, #8b0000);
+          padding: 0; display: grid; grid-template-columns: repeat(4,1fr);
+        }
+        .stat-bar-item {
+          padding: 26px 20px; text-align: center;
+          border-right: 1px solid rgba(255,255,255,0.12);
+          position: relative; overflow: hidden;
+        }
+        .stat-bar-item:last-child { border-right: none; }
+        .stat-bar-val {
+          font-family: 'DM Serif Display', serif; font-size: clamp(22px, 3vw, 34px);
+          color: #fff; display: block; line-height: 1;
+        }
+        .stat-bar-label {
+          font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500;
+          letter-spacing: 0.15em; color: rgba(255,220,190,0.65);
+          text-transform: uppercase; display: block; margin-top: 6px;
+        }
+
+        /* ── Sections ── */
+        .section { padding: 90px 6%; }
+        .section-alt { padding: 90px 6%; background: #0e0202; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-label {
+          font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 700;
+          letter-spacing: 0.25em; text-transform: uppercase; color: #c0392b;
+          display: block; margin-bottom: 10px;
+        }
+        .section-rule {
+          width: 48px; height: 2px; border-radius: 1px;
+          background: linear-gradient(90deg, #c0392b, #ff6b35);
+          margin-bottom: 18px;
+        }
+        .section-h2 {
+          font-family: 'DM Serif Display', serif;
+          font-size: clamp(26px, 3.5vw, 44px); line-height: 1.15;
+          color: #f0e6d8; margin-bottom: 14px; letter-spacing: -0.01em;
+        }
+        .section-desc {
+          font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 300;
+          color: #a08060; line-height: 1.75; max-width: 520px;
+        }
+
+        /* ── Service Cards ── */
+        .services-grid {
+          display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+          gap: 20px; margin-top: 52px;
+        }
+        .service-card {
+          background: linear-gradient(145deg, rgba(24,4,4,0.9), rgba(14,2,2,0.96));
+          border: 1px solid rgba(139,26,26,0.18); border-radius: 6px;
+          padding: 28px 26px; position: relative; overflow: hidden;
+          transition: all 0.35s ease; cursor: default;
+        }
+        .service-card::before {
+          content: ''; position: absolute; inset: 0;
+          background: linear-gradient(135deg, rgba(192,57,43,0.05) 0%, transparent 60%);
+          opacity: 0; transition: opacity 0.35s;
+        }
+        .service-card:hover { border-color: rgba(192,57,43,0.45); transform: translateY(-5px); box-shadow: 0 20px 50px rgba(192,57,43,0.12); }
+        .service-card:hover::before { opacity: 1; }
+        .service-icon { font-size: 32px; display: block; margin-bottom: 14px; }
+        .service-title { font-family: 'DM Serif Display', serif; font-size: 19px; color: #f0e6d8; margin-bottom: 10px; }
+        .service-desc { font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; color: #90604e; line-height: 1.65; margin-bottom: 16px; }
+        .service-rate {
+          display: inline-flex; align-items: center; gap: 6px;
+          background: rgba(192,57,43,0.15); border: 1px solid rgba(192,57,43,0.3);
+          padding: 4px 12px; border-radius: 100px;
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 600;
+          color: #ff6b35; letter-spacing: 0.04em;
+        }
+
+        /* ── About ── */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .feature-tag {
+          display: inline-block;
+          background: rgba(192,57,43,0.1); border: 1px solid rgba(192,57,43,0.22);
+          padding: 6px 14px; border-radius: 100px;
+          font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+          letter-spacing: 0.1em; color: #ff6b35; margin: 4px 4px 4px 0;
+        }
+        .features-mini { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .feature-mini-card {
+          background: rgba(20,3,3,0.7); border: 1px solid rgba(139,26,26,0.13);
+          border-radius: 6px; padding: 18px;
+          transition: border-color 0.25s;
+        }
+        .feature-mini-card:hover { border-color: rgba(192,57,43,0.3); }
+        .fmc-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+        .fmc-title { font-family: 'DM Serif Display', serif; font-size: 14px; color: #f0e6d8; margin-bottom: 5px; }
+        .fmc-desc { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 300; color: #6a4030; line-height: 1.5; }
+
+        /* ── Testimonials ── */
+        .testi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px,1fr)); gap: 20px; margin-top: 52px; }
+        .testi-card {
+          background: rgba(18,3,3,0.8); border: 1px solid rgba(139,26,26,0.13);
+          border-radius: 6px; padding: 28px;
+          transition: border-color 0.25s, transform 0.25s;
+        }
+        .testi-card:hover { border-color: rgba(192,57,43,0.3); transform: translateY(-3px); }
+        .testi-mark { font-size: 36px; color: #7a0000; line-height: 1; margin-bottom: 12px; font-family: Georgia, serif; display: block; }
+        .testi-text { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; font-style: italic; color: #b89070; line-height: 1.7; margin-bottom: 20px; }
+        .testi-author { display: flex; align-items: center; gap: 12px; }
+        .testi-avatar {
+          width: 42px; height: 42px; border-radius: 50%;
+          background: linear-gradient(135deg, #c0392b, #7a0000);
+          display: grid; place-items: center;
+          font-family: 'DM Serif Display', serif; font-size: 17px; color: #fff;
+          border: 1.5px solid rgba(255,100,50,0.25); flex-shrink: 0;
+        }
+        .testi-name { font-family: 'DM Serif Display', serif; font-size: 15px; color: #f0e6d8; }
+        .testi-role { font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 400; color: #7a4030; margin-top: 2px; }
+
+        /* ── Form ── */
+        .form-section { padding: 90px 6%; background: #0e0202; }
+        .form-header { text-align: center; margin-bottom: 48px; }
+        .form-card {
+          max-width: 580px; margin: 0 auto;
+          background: linear-gradient(145deg, rgba(20,3,3,0.97), rgba(12,1,1,0.99));
+          border: 1px solid rgba(139,26,26,0.28); border-radius: 8px;
+          padding: 44px 40px;
+          box-shadow: 0 40px 80px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,100,50,0.08);
+          position: relative; overflow: hidden;
+        }
+        .form-card::before {
+          content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+          width: 400px; height: 200px; border-radius: 50%;
+          background: radial-gradient(ellipse, rgba(192,57,43,0.1) 0%, transparent 70%);
+          pointer-events: none;
+        }
+        .form-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #f0e6d8; text-align: center; margin-bottom: 4px; }
+        .form-sub { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400; color: #7a5040; text-align: center; margin-bottom: 32px; letter-spacing: 0.04em; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .form-group { margin-bottom: 18px; }
+        .form-label {
+          display: block; font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 600;
+          letter-spacing: 0.15em; text-transform: uppercase; color: #b89070; margin-bottom: 7px;
+        }
+        .form-input {
+          width: 100%; background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(139,26,26,0.22); border-radius: 4px;
+          padding: 13px 15px;
+          font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 400;
+          color: #f0e6d8; outline: none;
+          transition: border-color 0.25s, box-shadow 0.25s;
+          box-sizing: border-box;
+        }
+        .form-input::placeholder { color: rgba(150,100,70,0.5); }
+        .form-input:focus { border-color: rgba(192,57,43,0.55); box-shadow: 0 0 0 3px rgba(192,57,43,0.09); }
+        .form-input.error { border-color: #e74c3c; }
+        .form-select {
+          width: 100%; background: rgba(10,1,1,0.9);
+          border: 1px solid rgba(139,26,26,0.22); border-radius: 4px;
+          padding: 13px 40px 13px 15px;
+          font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 400;
+          color: #f0e6d8; outline: none; cursor: pointer;
+          appearance: none;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c0392b' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-repeat: no-repeat; background-position: right 14px center;
+          transition: border-color 0.25s, box-shadow 0.25s;
+          box-sizing: border-box;
+        }
+        .form-select:focus { border-color: rgba(192,57,43,0.55); box-shadow: 0 0 0 3px rgba(192,57,43,0.09); }
+        .form-select.error { border-color: #e74c3c; }
+        .form-error { font-family: 'DM Sans', sans-serif; font-size: 12px; color: #e74c3c; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+        .submit-btn {
+          width: 100%; margin-top: 6px;
+          background: linear-gradient(135deg, #c0392b 0%, #8b0000 50%, #c0392b 100%);
+          background-size: 200% 100%;
+          color: #fff; border: none; padding: 16px;
+          font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 700;
+          letter-spacing: 0.15em; text-transform: uppercase;
+          cursor: pointer; border-radius: 4px;
+          box-shadow: 0 8px 28px rgba(192,57,43,0.45);
+          transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .submit-btn:hover:not(:disabled) { background-position: right center; box-shadow: 0 12px 36px rgba(192,57,43,0.6); transform: translateY(-1px); }
+        .submit-btn:disabled { opacity: 0.7; cursor: default; }
+        .form-secure {
+          text-align: center; margin-top: 14px;
+          font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400;
+          color: #3e2015; letter-spacing: 0.05em;
+        }
+        .success-box { text-align: center; padding: 32px 16px; }
+        .success-icon { font-size: 56px; display: block; margin-bottom: 18px; }
+        .success-title { font-family: 'DM Serif Display', serif; font-size: 26px; color: #f0e6d8; margin-bottom: 10px; }
+        .success-msg { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 300; color: #b89070; line-height: 1.7; }
+        .success-contact {
+          margin-top: 22px; padding: 12px 20px;
+          background: rgba(192,57,43,0.12); border: 1px solid rgba(192,57,43,0.25); border-radius: 4px;
+          font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: #c0392b; letter-spacing: 0.1em;
+        }
+
+        /* ── Footer ── */
+        footer {
+          background: #050000; border-top: 1px solid rgba(139,26,26,0.18);
+          padding: 52px 6% 24px;
+        }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; margin-bottom: 40px; }
+        .footer-brand { font-family: 'DM Serif Display', serif; font-size: 20px; color: #f0e6d8; margin-bottom: 12px; }
+        .footer-desc { font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 300; color: #5a3020; line-height: 1.7; }
+        .footer-phone { font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; color: #c0392b; margin-top: 16px; letter-spacing: 0.04em; }
+        .footer-col-h { font-family: 'DM Sans', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: #c0392b; margin-bottom: 16px; }
+        .footer-link {
+          display: block; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 400;
+          color: #5a3020; margin-bottom: 8px; cursor: pointer; text-decoration: none;
+          transition: color 0.2s;
+        }
+        .footer-link:hover { color: #b89070; }
+        .footer-bottom {
+          border-top: 1px solid rgba(60,10,10,0.35); padding-top: 20px;
+          display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;
+        }
+        .footer-copy { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; color: #3a1810; letter-spacing: 0.04em; }
+        .footer-tagline { font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 400; color: #3a1810; }
+
+        /* ── Responsive ── */
+        @media (max-width: 900px) {
+          .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+          .hero-right { display: none; }
+          .about-grid { grid-template-columns: 1fr; gap: 40px; }
+          .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+          .stats-bar { grid-template-columns: repeat(2,1fr); }
+          .stat-bar-item:nth-child(2) { border-right: none; }
+          .hamburger { display: flex; }
+          .nav-links-wrap { display: none; }
+          .form-card { padding: 32px 22px; }
+          .form-row { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+          .hero { padding: 100px 5% 60px; }
+          .section, .section-alt, .form-section { padding: 60px 5%; }
+          footer { padding: 40px 5% 20px; }
+          .nav { padding: 0 5%; }
+          .hero-btns { flex-direction: column; }
+          .btn-primary, .btn-outline { width: 100%; text-align: center; }
         }
       `}</style>
 
-      <div style={styles.root}>
+      {/* Hidden Netlify form */}
+      <form name="loan-inquiry" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+        <input type="hidden" name="form-name" value="loan-inquiry" />
+        <input name="bot-field" />
+        <input name="name" /><input name="contact" /><input name="email" /><input name="loanType" />
+      </form>
 
-        <nav style={styles.nav}>
-          <div style={styles.navLogo}>
-            <div style={styles.navLogoCircle} className="logo-circle">E</div>
+      <div style={{ fontFamily: "'DM Sans', system-ui, sans-serif", background: "#0c0101", color: "#f0e6d8", minHeight: "100vh", overflowX: "hidden" }}>
+
+        {/* ── NAV ── */}
+        <nav className={`nav${scrolled ? " scrolled" : ""}`}>
+          <div className="nav-logo" onClick={() => scrollTo("hero")}>
+            <div className="nav-emblem">E</div>
             <div>
-              <div style={styles.navBrand}>Ekaaki Finance</div>
-              <div style={styles.navBrandSub}>Bhopal • Madhya Pradesh</div>
+              <div className="nav-brand-name">Ekaaki Finance</div>
+              <div className="nav-brand-sub">Bhopal · Madhya Pradesh</div>
             </div>
           </div>
-          <ul style={styles.navLinks} className="nav-links">
-            {["Services", "About", "Testimonials", "Contact"].map(l => (
-              <li key={l}>
-                <a style={styles.navLink} className="nav-link"
-                  onClick={() => document.getElementById(l.toLowerCase())?.scrollIntoView({ behavior: "smooth" })}>
-                  {l}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <button style={styles.navCta} className="btn-primary" onClick={scrollToForm}>
-            Apply Now
+          <div className="nav-links-wrap">
+            <ul className="nav-links">
+              {[["services","Services"],["about","About"],["testimonials","Testimonials"],["contact","Contact"]].map(([id,label]) => (
+                <li key={id}><button className="nav-link" onClick={() => scrollTo(id)}>{label}</button></li>
+              ))}
+            </ul>
+          </div>
+          <button className="nav-cta" onClick={() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })}>Apply Now</button>
+          <button className="hamburger" onClick={() => setMobileMenu(m => !m)} aria-label="Menu">
+            <span /><span /><span />
           </button>
         </nav>
-
-        <section id="hero" style={{ ...styles.hero }} className="hero-section">
-          <div style={styles.heroGlow} />
-          <div style={styles.heroDiya}>🪔</div>
-          <div style={styles.heroContent} className="hero-content">
-            <div style={styles.heroTag}>
-              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#ff6633", display: "inline-block" }} />
-              Trusted Financial Partner — Bhopal
-            </div>
-            <h1 style={styles.heroH1}>
-              Your Dreams,{" "}
-              <span style={styles.heroH1Accent}>Our Commitment</span>
-            </h1>
-            <p style={{ ...styles.heroSub }}>
-              Strategic financial solutions with seamless processes. From home loans to business funding — Ekaaki Finance empowers your every aspiration.
-            </p>
-            <div style={styles.heroBtns}>
-              <button style={styles.btnPrimary} className="btn-primary" onClick={scrollToForm}>
-                Apply for Loan
-              </button>
-              <button style={styles.btnSecondary} className="btn-secondary"
-                onClick={() => document.getElementById("services")?.scrollIntoView({ behavior: "smooth" })}>
-                Explore Services
-              </button>
-            </div>
-          </div>
-        </section>
-
-        <div style={styles.statsBar} className="stats-bar">
-          {stats.map((s, i) => (
-            <div key={i} style={{ ...styles.statItem, borderRight: i < 3 ? "1px solid rgba(255,255,255,0.15)" : "none" }}>
-              <span style={styles.statValue}>{s.value}</span>
-              <span style={styles.statLabel}>{s.label}</span>
-            </div>
+        <div className={`mobile-menu${mobileMenu ? " open" : ""}`}>
+          {[["services","Services"],["about","About"],["testimonials","Testimonials"],["contact","Contact"]].map(([id,label]) => (
+            <button key={id} className="mobile-link" onClick={() => scrollTo(id)}>{label}</button>
           ))}
         </div>
 
-        <section id="services" style={styles.section}>
-          <span style={styles.sectionTag}>What We Offer</span>
-          <div style={styles.divider} />
-          <h2 style={styles.sectionH2}>Financial Solutions<br />Tailored for You</h2>
-          <p style={styles.sectionDesc}>
-            From personal aspirations to business ambitions — we offer comprehensive loan products at competitive rates with minimal documentation.
-          </p>
-          <div style={styles.grid}>
-            {services.map((s, i) => (
-              <div key={i} style={styles.card} className="card">
-                <div style={styles.cardGlow} />
-                <span style={styles.cardIcon}>{s.icon}</span>
-                <div style={styles.cardTitle}>{s.title}</div>
-                <p style={styles.cardDesc}>{s.desc}</p>
-                <span style={styles.cardRate}>Starting {s.rate}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section id="about" style={styles.sectionDark}>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "center" }}>
+        {/* ── HERO ── */}
+        <section id="hero" className="hero">
+          <div className="hero-grid">
             <div>
-              <span style={styles.sectionTag}>About Ekaaki Finance</span>
-              <div style={styles.divider} />
-              <h2 style={styles.sectionH2}>Leading Financial Growth Partner</h2>
-              <p style={{ ...styles.sectionDesc, marginBottom: 24 }}>
-                Based in the heart of Bhopal, Ekaaki Finance has been transforming financial dreams into reality. Our team of experts brings decades of experience across banking and financial services.
+              <div className="hero-badge">
+                <span className="hero-badge-dot" />
+                Trusted Financial Partner — Bhopal
+              </div>
+              <h1 className="hero-h1">
+                Your Dreams,
+                <span className="hero-h1-accent">Our Commitment</span>
+              </h1>
+              <p className="hero-sub">
+                Strategic financial solutions with seamless processes. From home loans to business funding — Ekaaki Finance empowers your every aspiration.
               </p>
-              <p style={{ ...styles.sectionDesc, marginBottom: 32 }}>
-                We believe in personalized solutions — because every client's financial journey is unique. From salaried professionals to business owners, we craft strategies that work.
-              </p>
-              <div style={{ display: "flex", gap: 16 }}>
-                {["Strategic Advice", "Seamless Process", "Best Rates"].map(t => (
-                  <div key={t} style={{
-                    background: "rgba(180,30,30,0.1)", border: "1px solid rgba(180,30,30,0.25)",
-                    padding: "8px 16px", borderRadius: 100,
-                    fontFamily: "'Cormorant Garamond', serif", fontSize: 12,
-                    letterSpacing: "0.1em", color: "#ff6633",
-                  }}>{t}</div>
-                ))}
+              <div className="hero-btns">
+                <button className="btn-primary" onClick={() => formRef.current?.scrollIntoView({ behavior: "smooth", block: "center" })}>Apply for Loan</button>
+                <button className="btn-outline" onClick={() => scrollTo("services")}>Explore Services</button>
               </div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
-              {[
-                { icon: "📋", t: "50+ Bank Partners", d: "Access to best rates across all major lenders" },
-                { icon: "⚡", t: "48-Hour Approval", d: "Fast-track processing for eligible applicants" },
-                { icon: "🔒", t: "100% Transparent", d: "No hidden fees, complete documentation clarity" },
-                { icon: "🤝", t: "Doorstep Service", d: "We come to you — Bhopal & surrounding areas" },
-              ].map((f, i) => (
-                <div key={i} style={{
-                  background: "rgba(20,3,3,0.8)", border: "1px solid rgba(180,30,30,0.15)",
-                  borderRadius: 4, padding: 20,
-                }}>
-                  <div style={{ fontSize: 28, marginBottom: 10 }}>{f.icon}</div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontSize: 14, color: "#f5e6d3", marginBottom: 6 }}>{f.t}</div>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "#7a5040", lineHeight: 1.5 }}>{f.d}</div>
+            <div className="hero-right" style={{ position: "relative" }}>
+              <div className="hero-accent-line" />
+              {stats.map((s, i) => (
+                <div key={i} className="stat-card" style={{ animationDelay: `${i * 0.1}s` }}>
+                  <div className="stat-card-icon">{["💰","😊","🏦","✅"][i]}</div>
+                  <div>
+                    <div className="stat-card-val">{s.value}</div>
+                    <div className="stat-card-label">{s.label}</div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        <section id="testimonials" style={styles.section}>
-          <span style={styles.sectionTag}>Client Stories</span>
-          <div style={styles.divider} />
-          <h2 style={styles.sectionH2}>Voices of Trust</h2>
-          <div style={styles.testimonialsGrid}>
-            {testimonials.map((t, i) => (
-              <div key={i} style={styles.tCard}>
-                <div style={{ fontSize: 28, color: "#7a0000", marginBottom: 12, fontFamily: "serif" }}>"</div>
-                <p style={styles.tQuote}>{t.text}</p>
-                <div style={styles.tAuthor}>
-                  <div style={styles.tAvatar}>{t.avatar}</div>
-                  <div>
-                    <div style={styles.tName}>{t.name}</div>
-                    <div style={styles.tRole}>{t.role}</div>
-                  </div>
+        {/* ── STATS BAR ── */}
+        <div className="stats-bar">
+          {stats.map((s, i) => (
+            <div key={i} className="stat-bar-item">
+              <span className="stat-bar-val">{s.value}</span>
+              <span className="stat-bar-label">{s.label}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* ── SERVICES ── */}
+        <section id="services" className="section">
+          <div className="section-inner">
+            <span className="section-label">What We Offer</span>
+            <div className="section-rule" />
+            <h2 className="section-h2">Financial Solutions<br />Tailored for You</h2>
+            <p className="section-desc">Comprehensive loan products at competitive rates with minimal documentation and fast approvals.</p>
+            <div className="services-grid">
+              {services.map((s, i) => (
+                <div key={i} className="service-card">
+                  <span className="service-icon">{s.icon}</span>
+                  <div className="service-title">{s.title}</div>
+                  <p className="service-desc">{s.desc}</p>
+                  <span className="service-rate">Starting {s.rate}</span>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
-        <section id="contact" style={styles.sectionDark}>
-          <div style={{ textAlign: "center" }}>
-            <span style={styles.sectionTag}>Loan Inquiry</span>
-            <div style={{ ...styles.divider, margin: "0 auto 16px" }} />
-            <h2 style={{ ...styles.sectionH2, textAlign: "center" }}>Apply in Minutes</h2>
-            <p style={{ ...styles.sectionDesc, margin: "0 auto", textAlign: "center" }}>
-              Fill in your details below and our loan advisor will reach out within 24 hours with a tailored offer.
+        {/* ── ABOUT ── */}
+        <section id="about" className="section-alt">
+          <div className="section-inner">
+            <div className="about-grid">
+              <div>
+                <span className="section-label">About Ekaaki Finance</span>
+                <div className="section-rule" />
+                <h2 className="section-h2">Leading Financial Growth Partner</h2>
+                <p className="section-desc" style={{ marginBottom: 20 }}>
+                  Based in the heart of Bhopal, Ekaaki Finance has been transforming financial dreams into reality. Our team brings decades of experience across banking and financial services.
+                </p>
+                <p className="section-desc" style={{ marginBottom: 28 }}>
+                  We believe in personalized solutions — because every client's financial journey is unique. From salaried professionals to business owners, we craft strategies that work.
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                  {["Strategic Advice", "Seamless Process", "Best Rates", "Transparent Terms"].map(t => (
+                    <span key={t} className="feature-tag">{t}</span>
+                  ))}
+                </div>
+              </div>
+              <div className="features-mini">
+                {[
+                  { icon: "📋", t: "50+ Bank Partners", d: "Access to best rates across all major lenders" },
+                  { icon: "⚡", t: "48-Hr Approval", d: "Fast-track processing for eligible applicants" },
+                  { icon: "🔒", t: "100% Transparent", d: "No hidden fees, complete documentation clarity" },
+                  { icon: "🤝", t: "Doorstep Service", d: "We come to you — Bhopal & surrounding areas" },
+                ].map((f, i) => (
+                  <div key={i} className="feature-mini-card">
+                    <span className="fmc-icon">{f.icon}</span>
+                    <div className="fmc-title">{f.t}</div>
+                    <div className="fmc-desc">{f.d}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── TESTIMONIALS ── */}
+        <section id="testimonials" className="section">
+          <div className="section-inner">
+            <span className="section-label">Client Stories</span>
+            <div className="section-rule" />
+            <h2 className="section-h2">Voices of Trust</h2>
+            <div className="testi-grid">
+              {testimonials.map((t, i) => (
+                <div key={i} className="testi-card">
+                  <span className="testi-mark">"</span>
+                  <p className="testi-text">{t.text}</p>
+                  <div className="testi-author">
+                    <div className="testi-avatar">{t.avatar}</div>
+                    <div>
+                      <div className="testi-name">{t.name}</div>
+                      <div className="testi-role">{t.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── CONTACT / FORM ── */}
+        <section id="contact" className="form-section">
+          <div className="form-header">
+            <span className="section-label">Loan Inquiry</span>
+            <div className="section-rule" style={{ margin: "0 auto 14px" }} />
+            <h2 className="section-h2" style={{ textAlign: "center" }}>Apply in Minutes</h2>
+            <p className="section-desc" style={{ margin: "0 auto", textAlign: "center" }}>
+              Fill in your details and our loan advisor will reach out within 24 hours with a tailored offer.
             </p>
           </div>
 
-          <div style={styles.formWrap} ref={formRef} className="form-wrap">
-            <div style={styles.formGlow} />
-
+          <div className="form-card" ref={formRef}>
             {submitted ? (
-              <div style={styles.successBox}>
-                <span style={styles.successIcon}>🎉</span>
-                <div style={styles.successTitle}>Inquiry Received!</div>
-                <p style={styles.successMsg}>
-                  Thank you, <strong style={{ color: "#f5e6d3" }}>{form.name}</strong>! Our financial advisor will contact you at <strong style={{ color: "#f5e6d3" }}>{form.contact}</strong> within 24 hours to discuss your {form.loanType} requirements.
+              <div className="success-box">
+                <span className="success-icon">🎉</span>
+                <div className="success-title">Inquiry Received!</div>
+                <p className="success-msg">
+                  Thank you, <strong style={{ color: "#f0e6d8" }}>{form.name}</strong>! Our financial advisor will contact you at <strong style={{ color: "#f0e6d8" }}>{form.contact}</strong> within 24 hours to discuss your {form.loanType} requirements.
                 </p>
-                <div style={{ marginTop: 24, padding: "12px 24px", background: "rgba(180,30,30,0.15)", border: "1px solid rgba(180,30,30,0.3)", borderRadius: 4 }}>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 13, color: "#cc4400", letterSpacing: "0.15em" }}>
-                    📞 For urgent queries: 8889444930
-                  </div>
-                </div>
+                <div className="success-contact">📞 Urgent queries: 8889444930</div>
               </div>
             ) : (
               <>
-                <div style={styles.formTitle}>Loan Inquiry Form</div>
-                <div style={styles.formSub}>Quick • Confidential • No Obligation</div>
+                <div className="form-title">Loan Inquiry Form</div>
+                <div className="form-sub">Quick · Confidential · No Obligation</div>
 
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>Full Name *</label>
-                  <input
-                    style={{ ...styles.input, borderColor: errors.name ? "#ff4444" : undefined }}
-                    placeholder="Enter your full name"
-                    value={form.name}
-                    onChange={e => { setForm({ ...form, name: e.target.value }); setErrors({ ...errors, name: "" }); }}
-                  />
-                  {errors.name && <div style={styles.errorText}>⚠ {errors.name}</div>}
+                <div className="form-row">
+                  <div className="form-group">
+                    <label className="form-label">Full Name *</label>
+                    <input
+                      className={`form-input${errors.name ? " error" : ""}`}
+                      placeholder="Your full name"
+                      value={form.name}
+                      onChange={e => { setForm({ ...form, name: e.target.value }); setErrors({ ...errors, name: "" }); }}
+                    />
+                    {errors.name && <div className="form-error">⚠ {errors.name}</div>}
+                  </div>
+                  <div className="form-group">
+                    <label className="form-label">Mobile Number *</label>
+                    <input
+                      className={`form-input${errors.contact ? " error" : ""}`}
+                      placeholder="10-digit number"
+                      value={form.contact} maxLength={10}
+                      onChange={e => { setForm({ ...form, contact: e.target.value.replace(/\D/g, "") }); setErrors({ ...errors, contact: "" }); }}
+                    />
+                    {errors.contact && <div className="form-error">⚠ {errors.contact}</div>}
+                  </div>
                 </div>
 
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>Mobile Number *</label>
+                <div className="form-group">
+                  <label className="form-label">Email Address *</label>
                   <input
-                    style={{ ...styles.input, borderColor: errors.contact ? "#ff4444" : undefined }}
-                    placeholder="10-digit mobile number"
-                    value={form.contact} maxLength={10}
-                    onChange={e => { setForm({ ...form, contact: e.target.value.replace(/\D/g, "") }); setErrors({ ...errors, contact: "" }); }}
-                  />
-                  {errors.contact && <div style={styles.errorText}>⚠ {errors.contact}</div>}
-                </div>
-
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>Email Address *</label>
-                  <input
-                    style={{ ...styles.input, borderColor: errors.email ? "#ff4444" : undefined }}
+                    className={`form-input${errors.email ? " error" : ""}`}
                     placeholder="your@email.com" type="email"
                     value={form.email}
                     onChange={e => { setForm({ ...form, email: e.target.value }); setErrors({ ...errors, email: "" }); }}
                   />
-                  {errors.email && <div style={styles.errorText}>⚠ {errors.email}</div>}
+                  {errors.email && <div className="form-error">⚠ {errors.email}</div>}
                 </div>
 
-                <div style={styles.formGroup}>
-                  <label style={styles.label}>Loan Type *</label>
+                <div className="form-group">
+                  <label className="form-label">Loan Type *</label>
                   <select
-                    style={{ ...styles.select, borderColor: errors.loanType ? "#ff4444" : undefined }}
+                    className={`form-select${errors.loanType ? " error" : ""}`}
                     value={form.loanType}
                     onChange={e => { setForm({ ...form, loanType: e.target.value }); setErrors({ ...errors, loanType: "" }); }}
                   >
-                    <option value="" style={{ background: "#0a0000" }}>Select loan type...</option>
+                    <option value="" style={{ background: "#0c0101" }}>Select loan type...</option>
                     {loanTypes.map(l => (
-                      <option key={l} value={l} style={{ background: "#0a0000" }}>{l}</option>
+                      <option key={l} value={l} style={{ background: "#0c0101" }}>{l}</option>
                     ))}
                   </select>
-                  {errors.loanType && <div style={styles.errorText}>⚠ {errors.loanType}</div>}
+                  {errors.loanType && <div className="form-error">⚠ {errors.loanType}</div>}
                 </div>
 
-                <button
-                  style={{ ...styles.submitBtn, opacity: submitting ? 0.8 : 1 }}
-                  className="submit-btn"
-                  onClick={handleSubmit}
-                  disabled={submitting}
-                >
-                  {submitting ? "Submitting..." : "Submit Loan Inquiry →"}
+                <button className="submit-btn" onClick={handleSubmit} disabled={submitting}>
+                  {submitting ? "Submitting…" : <>Submit Loan Inquiry <span>→</span></>}
                 </button>
-
-                <div style={{ textAlign: "center", marginTop: 16, fontFamily: "'Cormorant Garamond', serif", fontSize: 12, color: "#4a3020", letterSpacing: "0.05em" }}>
-                  🔒 Your information is 100% secure and confidential
-                </div>
+                <div className="form-secure">🔒 Your information is 100% secure and confidential</div>
               </>
             )}
           </div>
         </section>
 
-        <footer style={styles.footer}>
-          <div style={styles.footerGrid} className="footer-grid">
+        {/* ── FOOTER ── */}
+        <footer>
+          <div className="footer-grid">
             <div>
-              <div style={styles.footerBrand}>Ekaaki Finance</div>
-              <p style={styles.footerDesc}>
+              <div className="footer-brand">Ekaaki Finance</div>
+              <p className="footer-desc">
                 MF 12, First Floor, Block A, Mansarovar Complex,<br />
                 Near Rani Kamlapati Railway Station,<br />
-                Bhopal, Madhya Pradesh 462016
+                Bhopal, Madhya Pradesh — 462016
               </p>
-              <div style={{ marginTop: 20, fontFamily: "'Cormorant Garamond', serif", fontSize: 15, color: "#cc4400" }}>
-                📞 8889444930
-              </div>
+              <div className="footer-phone">📞 8889444930</div>
             </div>
             <div>
-              <div style={styles.footerH}>Loan Products</div>
-              {["Home Loan", "Business Loan", "Personal Loan", "Car Loan", "Education Loan"].map(l => (
-                <a key={l} style={styles.footerLink} className="footer-link">{l}</a>
+              <div className="footer-col-h">Loan Products</div>
+              {["Home Loan","Business Loan","Personal Loan","Car Loan","Education Loan"].map(l => (
+                <a key={l} className="footer-link">{l}</a>
               ))}
             </div>
             <div>
-              <div style={styles.footerH}>Company</div>
-              {["About Us", "Our Team", "Blog", "Careers", "Privacy Policy"].map(l => (
-                <a key={l} style={styles.footerLink} className="footer-link">{l}</a>
+              <div className="footer-col-h">Company</div>
+              {["About Us","Our Team","Blog","Careers","Privacy Policy"].map(l => (
+                <a key={l} className="footer-link">{l}</a>
               ))}
             </div>
           </div>
-          <div style={styles.footerBottom}>
-            <div style={styles.footerCopy}>© 2024 Ekaaki Finance. All rights reserved.</div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 12, color: "#4a2020" }}>
-              Strategic Advice • Seamless Loan Processes • Leading Financial Growth
-            </div>
+          <div className="footer-bottom">
+            <div className="footer-copy">© 2025 Ekaaki Finance. All rights reserved.</div>
+            <div className="footer-tagline">Strategic Advice · Seamless Loan Processes · Leading Financial Growth</div>
           </div>
         </footer>
 
@@ -821,5 +777,3 @@ function App() {
     </>
   );
 }
-
-export default App;
